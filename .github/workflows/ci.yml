@@ -1,0 +1,44 @@
+name: Flask CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - name: Compile Python
+        run: python -m py_compile app.py
+      - name: Smoke test Flask routes
+        run: |
+          python - <<'PY'
+          import os
+          import tempfile
+          import app as fitness
+
+          fd, path = tempfile.mkstemp(suffix='.db')
+          os.close(fd)
+          os.unlink(path)
+          fitness.app.config.update(TESTING=True, DATABASE=path, SECRET_KEY='test-secret')
+          fitness.init_db()
+          client = fitness.app.test_client()
+
+          assert client.get('/').status_code == 200
+          assert client.post('/register', data={'name':'Test User','email':'test@example.com','password':'secret123'}, follow_redirects=True).status_code == 200
+          assert client.post('/onboarding', data={'goal':'strength','level':'beginner','available_time':'20','equipment':'none','reminder_start':'18:00','reminder_end':'21:00'}, follow_redirects=True).status_code == 200
+          assert client.get('/dashboard').status_code == 200
+          assert client.post('/workout', data={'mood':'energetic','minutes':'20'}, follow_redirects=True).status_code == 200
+          assert client.get('/sos').status_code == 200
+          assert client.get('/progress').status_code == 200
+          assert client.get('/buddy').status_code == 200
+          print('FitSync Flask smoke tests passed')
+          PY
