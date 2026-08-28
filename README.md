@@ -1,38 +1,39 @@
 # FitSync — Adaptive Fitness Companion
 
-A working browser-based MVP for the SIH fitness solution.
+A full Python/Flask web application for the SIH fitness solution.
 
-## Included now
-- Personalized onboarding: goal, level, time and workout window
-- Mood-adaptive workout generation
-- Time-based workout sizing
-- Exercise player with embedded demonstration-video support, instructions and common mistakes
-- Exercise alternatives
-- Workout completion and persistent local history
+## Included
+- Secure registration and login with hashed passwords
+- Personalized onboarding: goal, level, available time, equipment and reminder window
+- Mood-adaptive workouts
+- Time-based workout generation
+- Exercise player with demonstration videos, instructions, common mistakes and alternatives
+- Workout completion and history
 - Daily streak calculation
 - Streak Freeze
-- SOS Save workout
+- SOS Save Workout
 - Progress dashboard and achievements
-- Flexible reminder preference using the browser Notification API while the app is open
-- Streak Buddy simulation UI
-- Responsive mobile-friendly interface
+- Real multi-user Streak Buddy using the SQLite user database
+- Profile and flexible reminder preferences
+- Responsive interface
 
-## Future scope
-AI camera posture/form correction, pose detection and real-time corrective feedback are intentionally not part of this build.
-
-## Run locally
-No build step is required. Serve this folder with any static server, for example:
+## Run in GitHub Codespaces
 
 ```bash
-python -m http.server 8080
+pip install -r requirements.txt
+python app.py
 ```
 
-Then open `http://localhost:8080`.
+Open the **Ports** tab, find port `5000`, and click **Open in Browser**.
 
-## Data
-The current MVP uses `localStorage` under `fitsync_v1`, so workouts, streaks, freezes, profile settings and demo buddy state persist in the browser.
+## Database
 
-For production, replace the storage functions in `app.js` with a backend such as Firebase or Supabase. Suggested collections/tables: users, workouts, buddy_connections, reminders and achievements.
+SQLite is created automatically at `instance/fitness.db`.
+
+## Future Scope
+
+AI camera posture/form correction, pose detection and real-time corrective feedback are intentionally excluded from the current build.
 
 ## Exercise videos
-The catalogue supports embeddable video URLs. Before a production release, verify ownership, licensing and availability of every exercise demonstration, or host your own properly licensed videos.
+
+The prototype uses embedded public demonstration URLs. For production or the final SIH deployment, replace them with demonstration videos you own or are licensed to use.
