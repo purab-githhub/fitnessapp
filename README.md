@@ -61,3 +61,6 @@ The following advanced AI module is intentionally outside the current build:
 - Exercise detection
 - Form/posture analysis
 - Real-time corrective feedback
+## Why FitSync
+
+Most fitness apps assume users always have the same amount of time, energy, and motivation — and that's rarely true. FitSync is built around the idea that adherence beats intensity: a workout that adapts to how someone actually feels today and how much time they actually have is far more sustainable than a rigid, one-size-fits-all plan. This is the core problem FitSync's SIH pitch addresses — helping users build lasting fitness habits instead of abandoning generic routines after a week.
